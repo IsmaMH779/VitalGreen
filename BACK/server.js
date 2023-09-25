@@ -35,7 +35,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
     //get name of uploaded file
     const fileName = req.file.filename;
     console.log('Nombre del archivo:', fileName);
-    res.send('Archivo subido correctamente.');
+    res.send(fileName);
 
 });
 
@@ -60,17 +60,19 @@ app.get('/api/files', (req, res) => {
 app.get('/open-file/:filename/:cropname', (req, res) => {
     const { filename, cropname } = req.params;
     //var del resultado
-    let enfermedad = ''
+    let disease;
 
     // crop disease script route
     const pythonScriptPath = path.join(__dirname, 'src/py/crop_disease_script.py');
-
+    const model_path = path.join(__dirname, `src/py/trained_model/disease/modelo_entrenado_${cropname}.h5`)
+    const img_path = path.join(__dirname, `uploads/crop-image/${filename}`)
     // ejecute python script
-    const pythonScript = spawn('python', [pythonScriptPath, filename, cropname]);
+    const pythonScript = spawn('python', [pythonScriptPath, img_path, model_path]);
     console.log(pythonScript);
     // Manejar la salida del script de Python
     pythonScript.stdout.on('data', (data) => {
-        enfermedad += data.toString();
+        disease += data.toString();
+
     });
 
     // Manejar los errores del script de Python
@@ -81,7 +83,7 @@ app.get('/open-file/:filename/:cropname', (req, res) => {
     pythonScript.on('close', (code) => {
         if (code === 0) {
             // Si el script se ejecutó sin errores, enviar la salida al cliente React
-            res.send(enfermedad);
+            res.send(disease);
         } else {
             // Si hubo errores en el script, enviar un mensaje de error al cliente React
             res.status(500).send('Error en el script de Python');
@@ -92,7 +94,6 @@ app.get('/open-file/:filename/:cropname', (req, res) => {
 //recomendation route
 app.post('/recomendation', (req, res) => {
     let recomendacion;
-
     // crop disease script route
     const pythonScriptPath = path.join(__dirname, 'src/py/recomendation_script.py');
     //rutas del modelo y del scaler

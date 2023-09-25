@@ -3,10 +3,10 @@ import numpy as np
 from PIL import Image
 import tensorflow as tf
 
-def process_file(file_path,crop_name):
+def process_file(file_path,model_route):
     
     try:
-        model = tf.keras.models.load_model(f'./trained_model/disease/modelo_entrenado_{crop_name}.h5')
+        model = tf.keras.models.load_model(model_route)
         
         new_img = Image.open(file_path)
         new_img = new_img.resize((150,150))
@@ -16,9 +16,11 @@ def process_file(file_path,crop_name):
         prediccion = model.predict(new_img)
 
         if prediccion[0][0] >= 0.5:
-            print("La planta está enferma.")
+            "La planta esta enferma."
+            print(1)
         else:
-            print("La planta está sana.")
+            "La planta esta sana."
+            print(0)
     except FileNotFoundError:
         print("Archivo no encontrado.")
     except Exception as e:
@@ -28,7 +30,7 @@ if __name__ == "__main__":
     # Obtener la ruta del archivo como argumento de línea de comandos
     if len(sys.argv) > 2:
         file_path = sys.argv[1]
-        crop_name = sys.argv[2]
-        process_file(file_path, crop_name)
+        model_route = sys.argv[2]
+        process_file(file_path,model_route)
     else:
         print("Por favor, especifique la ruta del archivo como argumento y el nombre del cultivo.")

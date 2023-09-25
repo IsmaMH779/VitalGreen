@@ -8,6 +8,10 @@ const fileTypes = ['JPG', 'PNG'];
 
 function DragAndDrop() {
   const [files, setFile] = useState([]);
+  const [fileName, setFileName] = useState();
+  const [cropName, setCropName] = useState();
+  const [disease, setDisease] = useState();
+
   const handleFileDrop = (file) => {
     setFile(file);
     // Crear una instancia de FormData para enviar el archivo al servidor
@@ -21,13 +25,28 @@ function DragAndDrop() {
     })
       .then((response) => response.text())
       .then((result) => {
-        console.log(result); // Mensaje de respuesta del servidor
+        setFileName(result); // Mensaje de respuesta del servidor
       })
       .catch((error) => {
         alert('Error al subir el archivo');
         console.error('Error al subir el archivo:', error);
       });
   };
+  //boton de enviar
+  const handleSubmit = () => {
+    fetch(`http://localhost:9000/open-file/${fileName}/${cropName}`)
+      .then((response) => response.text())
+      .then((data) => {
+        let split = data.split('\n');
+        split.splice(0, 3);
+
+        setDisease(split.join('\n')) // aqui se guarda el resultado de la enfermedad si esta sana aqui se graba un 0 si esta enferma se grabara un 1
+      })
+      .catch((error) => console.error('Error:', error));
+
+
+  }
+
 
   return (
     <div className='flex min-h-screen flex-col items-center justify-center bg-secondary'>
@@ -41,12 +60,16 @@ function DragAndDrop() {
       </p>
       <div className='card m-10 w-2/5 flex-shrink-0 bg-white shadow-2xl'>
         <div className='flex flex-col items-center py-10'>
-          <select className='select select-primary my-8 w-full max-w-xs'>
+          <select
+            className='select select-primary my-8 w-full max-w-xs'
+            onChange={(e) => setCropName(e.target.value)}
+          >
             <option disabled selected>
               Elige un cultivo
             </option>
-            <option>Manzana</option>
-            <option>Maiz</option>
+            <option value="Apple">Manzano</option>
+            <option value="Maize">Maiz</option>
+            <option value="Grape">Viña</option>
           </select>
           <FileUploader
             handleChange={handleFileDrop}
@@ -58,7 +81,7 @@ function DragAndDrop() {
             <label className='label-text text-primary'>Arrastra tus imágenes o haz click aquí</label>
           </FileUploader>
           <div className='my-5'>
-            <Button style='primary'>Enviar</Button>
+            <Button style='primary' onClick={handleSubmit}>Enviar</Button>
           </div>
         </div>
       </div>
