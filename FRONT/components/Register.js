@@ -2,14 +2,14 @@
 
 import Button from 'components/Button';
 import React, { useState } from 'react';
-
+import Link from 'next/link';
 
 export default function RegisterForm() {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
-    password_repeat:'',
+    password_repeat: '',
   });
 
   const handleChange = (e) => {
@@ -46,7 +46,10 @@ export default function RegisterForm() {
     }
   };
   return (
-    <div className='hero min-h-screen bg-neutral'>
+    <div className='flex min-h-screen flex-col items-center bg-neutral'>
+      <Link href='http://localhost:3000/'>
+        <img src='/images/logo-VG-original.png' className='my-8 h-auto w-40 grid-cols-1' />
+      </Link>
       <div className='hero-content flex-col lg:flex-row-reverse'>
         <img src='/images/plants.jpg' className='mx-20 max-w-md rounded-xl shadow-2xl' />
         <form onSubmit={handleSubmit}>
@@ -61,7 +64,7 @@ export default function RegisterForm() {
                 </p>
               </label>
               <div className='form-control'>
-                <label className='label' htmlFor="username">
+                <label className='label' htmlFor='username'>
                   <span className='label-text'>Username</span>
                 </label>
                 <input
@@ -76,7 +79,7 @@ export default function RegisterForm() {
               </div>
 
               <div className='form-control'>
-                <label className='label' htmlFor="email">
+                <label className='label' htmlFor='email'>
                   <span className='label-text'>Email</span>
                 </label>
                 <input
@@ -86,11 +89,12 @@ export default function RegisterForm() {
                   onChange={handleChange}
                   type='email'
                   placeholder='Email'
-                  className='input input-bordered input-secondary' />
+                  className='input input-bordered input-secondary'
+                />
               </div>
 
               <div className='form-control'>
-                <label className='label' htmlFor="password">
+                <label className='label' htmlFor='password'>
                   <span className='label-text'>Contraseña</span>
                 </label>
                 <input
@@ -100,10 +104,11 @@ export default function RegisterForm() {
                   onChange={handleChange}
                   type='password'
                   placeholder='Contraseña'
-                  className='input input-bordered input-secondary' />
+                  className='input input-bordered input-secondary'
+                />
               </div>
               <div className='form-control'>
-                <label className='label' htmlFor="password_repeat">
+                <label className='label' htmlFor='password_repeat'>
                   <span className='label-text'>Repite tu Contraseña</span>
                 </label>
                 <input
@@ -113,13 +118,15 @@ export default function RegisterForm() {
                   onChange={handleChange}
                   type='password'
                   placeholder='Repite la contraseña'
-                  className='input input-bordered input-secondary' />
+                  className='input input-bordered input-secondary'
+                />
               </div>
               <div className='form-control mt-6'>
-                <Button style='primary' type='submit'>Enviar</Button>
+                <Button style='primary' type='submit'>
+                  Enviar
+                </Button>
               </div>
             </div>
-
           </div>
         </form>
       </div>

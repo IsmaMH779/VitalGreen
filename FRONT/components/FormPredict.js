@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import Button from 'components/Button';
 
 export default function FormPredict() {
-  const [recomendation, setRecomendation] = useState('')
-  const [title, setTitle] = useState('')
+  const [recomendation, setRecomendation] = useState('');
+  const [title, setTitle] = useState('');
   const [formData, setFormData] = useState({
     n: null,
     p: null,
@@ -12,7 +12,7 @@ export default function FormPredict() {
     temperature: null,
     humidity: null,
     ph: null,
-    rainfall: null
+    rainfall: null,
   });
 
   const handleChange = (e) => {
@@ -31,40 +31,43 @@ export default function FormPredict() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
-
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
           throw new Error('Error en la solicitud');
         }
         return response.json();
       })
-      .then(data => {
-        console.log(data)
+      .then((data) => {
+        console.log(data);
         setRecomendation({ titulo: title, num_cultivo: data });
-        console.log(recomendation)
+        console.log(recomendation);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error.message);
       });
   };
 
-  console.log(recomendation)
+  console.log(recomendation);
   return (
-    <div>
-      <h2 className='text-3xl font-semibold text-center py-7 text-primary'>¡Obtén resultados precisos para tu tierra en segundos!</h2>
+    <div className='flex flex-col items-center'>
+      <img src='/images/cerca.png' className='my-4' />
+      <h2 className='py-7 text-center text-4xl font-semibold text-primary'>
+        ¡Obtén resultados precisos para tu tierra en segundos!
+      </h2>
       <form onSubmit={handleSubmit}>
-        <div className='grid grid-rows-4 grid-flow-col gap-6 mx-28 items-center justify-center'>
+        <div className='mx-28 grid grid-flow-col grid-rows-4 items-center justify-center gap-6'>
           <div className='form-control'>
             <label className='label'>
               <span className='label-text'>Tìtulo</span>
             </label>
             <input
               name='title'
-              onChange={e => setTitle(e.target.value)}
-              type="text"
-              placeholder="Titulo de la predicción"
-              className="input input-bordered w-full max-w-sm input-secondary" />
+              onChange={(e) => setTitle(e.target.value)}
+              type='text'
+              placeholder='Titulo de la predicción'
+              className='input input-bordered input-secondary w-full max-w-sm'
+            />
           </div>
           <div className='form-control'>
             <label className='label'>
@@ -72,9 +75,9 @@ export default function FormPredict() {
             </label>
             <input
               name='n'
-              type="number"
-              placeholder="0"
-              className="input input-bordered w-full max-w-xs input-secondary"
+              type='number'
+              placeholder='0'
+              className='input input-bordered input-secondary w-full max-w-xs'
               value={formData.username}
               onChange={handleChange}
             />
@@ -85,9 +88,9 @@ export default function FormPredict() {
             </label>
             <input
               name='p'
-              type="number"
-              placeholder="0"
-              className="input input-bordered w-full max-w-xs input-secondary"
+              type='number'
+              placeholder='0'
+              className='input input-bordered input-secondary w-full max-w-xs'
               value={formData.username}
               onChange={handleChange}
             />
@@ -98,9 +101,9 @@ export default function FormPredict() {
             </label>
             <input
               name='k'
-              type="number"
-              placeholder="0"
-              className="input input-bordered w-full max-w-xs input-secondary"
+              type='number'
+              placeholder='0'
+              className='input input-bordered input-secondary w-full max-w-xs'
               value={formData.username}
               onChange={handleChange}
             />
@@ -111,9 +114,9 @@ export default function FormPredict() {
             </label>
             <input
               name='temperature'
-              type="number"
-              placeholder="0"
-              className="input input-bordered w-full max-w-xs input-secondary"
+              type='number'
+              placeholder='0'
+              className='input input-bordered input-secondary w-full max-w-xs'
               value={formData.username}
               onChange={handleChange}
             />
@@ -124,9 +127,9 @@ export default function FormPredict() {
             </label>
             <input
               name='humidity'
-              type="number"
-              placeholder="0"
-              className="input input-bordered w-full max-w-xs input-secondary"
+              type='number'
+              placeholder='0'
+              className='input input-bordered input-secondary w-full max-w-xs'
               value={formData.username}
               onChange={handleChange}
             />
@@ -137,9 +140,9 @@ export default function FormPredict() {
             </label>
             <input
               name='ph'
-              type="number"
-              placeholder="0"
-              className="input input-bordered w-full max-w-xs input-secondary"
+              type='number'
+              placeholder='0'
+              className='input input-bordered input-secondary w-full max-w-xs'
               value={formData.username}
               onChange={handleChange}
             />
@@ -150,15 +153,15 @@ export default function FormPredict() {
             </label>
             <input
               name='rainfall'
-              type="number"
-              placeholder="0"
-              className="input input-bordered w-full max-w-xs input-secondary"
+              type='number'
+              placeholder='0'
+              className='input input-bordered input-secondary w-full max-w-xs'
               value={formData.username}
               onChange={handleChange}
             />
           </div>
         </div>
-        <div className='flex justify-center my-10'>
+        <div className='my-10 flex justify-center'>
           <Button style='primary' type='submit'>
             Predecir
           </Button>

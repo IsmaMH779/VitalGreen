@@ -8,7 +8,6 @@ export default function Navbar() {
     <nav className='navbar sticky top-0 z-50 bg-white bg-opacity-80 px-8 py-5 backdrop-blur-md backdrop-filter'>
       <div className='navbar-start'>
         <div className='dropdown'>
-          
           <ul className='menu dropdown-content rounded-box menu-sm z-[1] mt-3 w-52 bg-base-100 p-2 shadow'>
             <li>
               <a>Inicio</a>
@@ -24,7 +23,7 @@ export default function Navbar() {
             </li>
           </ul>
         </div>
-        <a className='font-bold'>PlantsProject</a>
+        <img src='/images/logo-VG-original.png' className='h-auto w-40' />
       </div>
       <div className='navbar-center hidden lg:flex '>
         <ul className='menu menu-horizontal px-1'>
