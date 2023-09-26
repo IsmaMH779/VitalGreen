@@ -7,9 +7,9 @@ export default function ProfileMenu() {
   return (
     <section id='services-section' className='bg-gradient-to-b from-secondary to-white py-10'>
       <div>
-        <h2 className='my-5 pb-8 text-center text-3xl font-semibold'>
-          ¿Quieres anticipar una <span className='font-secondary font-normal'>cosecha</span> abundante<br></br>o cuidar
-          la <span className='font-secondary font-normal'>salud</span> de tus plantas?
+        <h2 className='my-5 pb-8 text-center text-3xl font-semibold font-primary'>
+          ¿Quieres anticipar una cosecha abundante<br></br>o cuidar
+          la salud de tus plantas?
         </h2>
       </div>
       <div className='container mx-auto grid grid-cols-2 justify-items-center'>
