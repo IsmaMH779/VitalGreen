@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Button from 'components/Button';
+import Link from 'next/link';
 
 export default function FormPredict() {
   const [recomendation, setRecomendation] = useState('');
@@ -163,7 +164,7 @@ export default function FormPredict() {
         </div>
         <div className='my-10 flex justify-center'>
           <Button style='primary' type='submit'>
-            Predecir
+            <Link href={'/result-predict'}>Predecir</Link>
           </Button>
         </div>
       </form>
