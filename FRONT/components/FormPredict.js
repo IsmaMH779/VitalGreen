@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import Button from 'components/Button';
 import Link from 'next/link';
+import ResultPredict from './ResultPredict';
 
 export default function FormPredict() {
   const [recomendation, setRecomendation] = useState('');
@@ -168,6 +169,7 @@ export default function FormPredict() {
           </Button>
         </div>
       </form>
+      <ResultPredict recomendation={recomendation}/>
     </div>
   );
 }
