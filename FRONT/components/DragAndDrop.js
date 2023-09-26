@@ -58,8 +58,8 @@ function DragAndDrop() {
         <span className='font-semibold'>¡Estamos aquí para ayudarte!</span> Sube una imagen de tu planta enferma a
         continuación <br />y utilizaremos nuestra avanzada tecnología de detección para identificar el problema
       </p>
-      <div className='card m-10 w-2/5 flex-shrink-0 bg-white shadow-2xl'>
-        <div className='flex flex-col items-center py-10'>
+      <div className='card m-8 w-2/5 flex-shrink-0 bg-white shadow-2xl'>
+        <div className='flex flex-col items-center py-7'>
           <select
             className='select select-primary my-8 w-full max-w-xs'
             onChange={(e) => setCropName(e.target.value)}
@@ -74,7 +74,7 @@ function DragAndDrop() {
           <FileUploader
             handleChange={handleFileDrop}
             name='file'
-            classes='bg-white py-16 px-40 border-dashed border-2 border-primary rounded-lg flex flex-col items-center hover:bg-stone-100'
+            classes='bg-white py-12 px-36 border-dashed border-2 border-primary rounded-lg flex flex-col items-center hover:bg-stone-100'
             types={fileTypes}
           >
             <img src='/images/upload-icon.png' className='py-3' />
