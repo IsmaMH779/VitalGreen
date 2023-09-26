@@ -9,7 +9,7 @@ export default function Hero() {
         <div className='hero-content grid grid-cols-2 gap-8'>
           <div>
             <img src='/images/tomates.jpg' className='mask mask-circle absolute left-2 z-0 max-w-3xl' />
-            <img src='/images/ilustraciones-vital.png' className='z-1 relative max-w-2xl' />
+            <img src='/images/ilustraciones-vital.png' className='z-1 relative max-w-xl' />
           </div>
           <div>
             <h1 className='text-5xl font-semibold'>
