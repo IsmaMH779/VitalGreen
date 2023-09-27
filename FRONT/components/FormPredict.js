@@ -4,7 +4,6 @@ import Button from 'components/Button';
 import Link from 'next/link';
 import ResultPredict from './ResultPredict';
 
-
 export default function FormPredict() {
   const [recomendation, setRecomendation] = useState('');
   const [title, setTitle] = useState('');
@@ -56,9 +55,6 @@ export default function FormPredict() {
       });
   };
 
-  const volver = () => {
-    setSub(false)
-  }
   // guardar datos del formulario en cookie
 
 
@@ -66,7 +62,7 @@ export default function FormPredict() {
   return (
 
     <div className='flex flex-col items-center'>
-      {sub ? <ResultPredict recomendation={recomendation} getFromChild={volver} /> :
+      {sub ? <ResultPredict recomendation={recomendation} /> :
 
         <><img src='/images/cerca.png' className='my-4' />
           <h2 className='py-7 text-center text-4xl font-semibold text-primary'>

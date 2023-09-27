@@ -40,7 +40,9 @@ function DragAndDrop() {
         let split = data.split('\n');
         split.splice(0, 3);
 
+
         setDisease(split.join('\n')) // aqui se guarda el resultado de la enfermedad si esta sana aqui se graba un 0 si esta enferma se grabara un 1
+        console.log(disease)
       })
       .catch((error) => console.error('Error:', error));
 

@@ -133,10 +133,11 @@ routes.post('/login', (req, res) => {
                     }
                     if (bResult) {
                         // password match
+
                         const token = jwt.sign(
                             {
                                 username: result[0].username,
-                                user_Id: result[0].id,
+                                user_Id: result[0].user_id,
                                 pass: result[0].password
                             },
                             'SECRETKEY',
@@ -265,37 +266,6 @@ routes.post('/crop-data', (req, res) => {
 
 //save your recomendation
 
-routes.post('/save_recomendation', userMiddleware.isLoggedIn, (req, res) => {
-    const {
-        humidity,
-        k,
-        n,
-        num_cultivo,
-        p,
-        ph,
-        rainfall,
-        temperature,
-        titulo
-    } = req.body;
-    const userId = req.userId;
-    console.log(req.userId)
-    const sql = 'INSERT INTO Prediction (id_users, title, nitrogen, phosphorus, potassium, temperature,humidity,ph,rainfall,prediction) VALUES(?,?,?,?,?,?,?,?,?,?)';
-    const values = [1, titulo, n, p, k, temperature, humidity, ph, rainfall, num_cultivo];
 
-    db.query(sql, values, (err, result) => {
-        if (err) {
-            console.error('Error al insertar', err);
-            return res.status(500).json({ error: 'Internal server error' });
-        }
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'Plant not found' });
-        }
-
-        res.json({ message: 'Plant saved successfully' });
-    }
-    )
-
-})
 
 module.exports = routes
