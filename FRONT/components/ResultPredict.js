@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 export default function ResultPredict(props) {
 
   const [crop_data, setCrop_data] = useState({})
-  const [cropId, setCropID] = useState('')
+
   useEffect(() => {
     fetch('http://localhost:9000/api/crop-data', {
       method: 'POST',
