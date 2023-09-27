@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const db = require('../lib/db.js');
 const userMiddleware = require('../middleware/users.js');
 
+let user_id_const;
+
 routes.get('/planta/:id', (req, res) => {
     const id = req.params.id;
     db.query('SELECT * FROM Plants WHERE id = ?', [id], (err, rows) => {
@@ -166,13 +168,13 @@ routes.put('/update-username', userMiddleware.isLoggedIn, (req, res) => {
     db.query(
         `SELECT * FROM users WHERE username = ? AND id != ?`,
         [req.body.newUsername, userId],
-        (err, res) => {
+        (err, result) => {
             if (err) {
                 console.error('Error searching username: ', err);
-                return res.status(500).json({ error: 'internal server error' });
+                return result.status(500).json({ error: 'internal server error' });
             }
             else if (res.length > 0) {
-                res.status(400).json({ error: 'This user name is in use' });
+                result.status(400).json({ error: 'This user name is in use' });
             }
             else {
                 db.query(
@@ -181,9 +183,9 @@ routes.put('/update-username', userMiddleware.isLoggedIn, (req, res) => {
                     (updateErr, updateRes) => {
                         if (updateErr) {
                             console.error('Error update username: ', updateErr);
-                            res.status(500).json({ error: 'Internal server error' });
+                            result.status(500).json({ error: 'Internal server error' });
                         } else {
-                            res.status(200).json({ message: 'Username changed successfully' });
+                            result.status(200).json({ message: 'Username changed successfully' });
                         }
                     }
                 );
@@ -199,15 +201,15 @@ routes.put('/change-password', userMiddleware.isLoggedIn, (req, res) => {
         db.query(
             'SELECT * FROM usuarios WHERE id = ?',
             [userId],
-            (err, res) => {
+            (err, result) => {
                 if (err) {
                     console.error('Error searching user:  ', err);
-                    res.status(500).json({ error: 'internal server error' });
-                } else if (results.length === 0) {
-                    res.status(404).json({ error: 'User not found' });
+                    result.status(500).json({ error: 'internal server error' });
+                } else if (result.length === 0) {
+                    result.status(404).json({ error: 'User not found' });
                 }
                 else {
-                    const user = results[0];
+                    const user = result[0];
                     const passwordMatch = bcrypt.compare(req.body.currentPasword, userData.pass);
                     if (passwordMatch) {
                         const hashedNewPassword = bcrypt.hash(newPassword, 10);
@@ -240,10 +242,60 @@ routes.put('/change-password', userMiddleware.isLoggedIn, (req, res) => {
 });
 
 
-//verified route example
-routes.get('/protected', userMiddleware.isLoggedIn, (req, res) => {
-    console.log(req.userData)
-    res.send('This is the secret content. Only logged in users can see that!');
+// get plants data
+routes.post('/crop-data', (req, res) => {
+    const plant_id = req.body.plant_id
+    db.query(
+        'SELECT * FROM Plants WHERE id = ?',
+        [plant_id],
+        (err, result) => {
+            if (err) {
+                console.error('Error searching plant:  ', err);
+                res.status(500).json({ error: 'internal server error' });
+            } else if (res.length === 0) {
+                res.status(404).json({ error: 'Plant not found' });
+            }
+            else {
+                const plants = result[0];
+                res.send(plants)
+            }
+        }
+    )
 });
+
+//save your recomendation
+
+routes.post('/save_recomendation', userMiddleware.isLoggedIn, (req, res) => {
+    const {
+        humidity,
+        k,
+        n,
+        num_cultivo,
+        p,
+        ph,
+        rainfall,
+        temperature,
+        titulo
+    } = req.body;
+    const userId = req.userId;
+    console.log(req.userId)
+    const sql = 'INSERT INTO Prediction (id_users, title, nitrogen, phosphorus, potassium, temperature,humidity,ph,rainfall,prediction) VALUES(?,?,?,?,?,?,?,?,?,?)';
+    const values = [1, titulo, n, p, k, temperature, humidity, ph, rainfall, num_cultivo];
+
+    db.query(sql, values, (err, result) => {
+        if (err) {
+            console.error('Error al insertar', err);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Plant not found' });
+        }
+
+        res.json({ message: 'Plant saved successfully' });
+    }
+    )
+
+})
 
 module.exports = routes

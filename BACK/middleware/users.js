@@ -33,7 +33,13 @@ module.exports = {
         try {
             const authHeader = req.headers.authorization;
             const token = authHeader.split(' ')[1];
-            const decoded = jwt.verify(token, 'SECRETKEY');
+            const decoded = jwt.verify(token, 'SECRETKEY', (err, decoded) => {
+                if (err) {
+                    return res.status(401).send({ message: 'Invalid token' });
+                }
+                req.userId = decoded.user_Id;
+                next();
+            });
             req.userData = decoded;
             next();
         } catch (err) {
