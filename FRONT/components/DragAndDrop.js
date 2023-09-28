@@ -14,7 +14,6 @@ function DragAndDrop() {
   const [disease, setDisease] = useState();
   const [submit, setSubmit] = useState(false);
 
-
   const handleFileDrop = (file) => {
     setFile(file);
     // Crear una instancia de FormData para enviar el archivo al servidor
